@@ -1,1 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Explore Menu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f5f5;
+    }
+    .top-bar {
+      background: #075E54;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .menu {
+      position: relative;
+      display: inline-block;
+    }
+    .menu-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    .menu-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    .menu-content a:hover {
+      background-color: #ddd;
+    }
+    .menu:hover .menu-content {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div>Welcome User</div>☰
+    <div class="menu-content">
+      <a href="#profile">Profile</a>
+      <a href="#settings">Settings</a>
+      <a href="#help">Help</a>
+      <a href="#logout">Logout</a>
+    </div>
+  </div>
+</div>
+
+<div style="padding: 20px;">
+  <h2>Explore the Site</h2>
+  <p>Click the menu icon (☰) to access options like Profile, Settings, Help, and Logout.</p>
+</div>
+
+</body>
+</html>
 
