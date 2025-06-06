@@ -1,57 +1,73 @@
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>Options Menu</title>
   <style>
-    .dropdown {
-      position: relative;
-      display: inline-block;
+    .menu {
+      max-width: 300px;
+      font-family: Arial;
     }
 
-    .dropdown-content {
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      background: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .content {
       display: none;
-      position: absolute;
-      background-color: #f1f1f1;
-      min-width: 200px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      padding: 12px;
-      z-index: 1;
+      padding: 10px;
+      background: #f0f0f0;
+      margin-bottom: 5px;
     }
 
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
-    .dropdown-content div {
-      margin-bottom: 10px;
-    }
-
-    h4 {
-      margin: 5px 0;
+    .logout {
+      color: red;
+      text-decoration: underline;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-<div class="dropdown">
-  <button>Options</button>
-  <div class="dropdown-content">
-    <div>
-      <h4>ABOUT</h4>
-      <p>I'm Karim Salifu from Nalerigu, North East Region. A web developer, graphic designer, and expert in all kinds of scam proofing.</p>
-    </div>
-    <div>
-      <h4>CONTACT</h4>
-      <p>Phone: 0559278841<br>Email: karimsalifu2740@gmail.com</p>
-    </div>
-    <div>
-      <h4>SERVICE</h4>
-      <p>Graphic Design, iPrint, Artist, Hacker, etc.</p>
-    </div>
+<div class="menu">
+  <button onclick="toggle('about')">ABOUT</button>
+  <div id="about" class="content">
+    I'm Karim Salifu from Nalerigu, North East Region. A web developer, graphic designer, and scam proof expert.
+  </div>
+
+  <button onclick="toggle('contact')">CONTACT</button>
+  <div id="contact" class="content">
+    Phone: 0559278841<br>Email: karimsalifu2740@gmail.com
+  </div>
+
+  <button onclick="toggle('service')">SERVICE</button>
+  <div id="service" class="content">
+Graphic Design, iPrint, Artist, Hacker, etc.
+  </div>
+
+  <button onclick="toggle('settings')">SETTINGS</button>
+  <div id="settings" class="content">
+    <span class="logout" onclick="alert('Logged out!')">Logout</span>
   </div>
 </div>
- 
- <!DOCTYPE html>
+
+<script>
+  function toggle(id) {
+    const section = document.getElementById(id);
+    section.style.display = section.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
+
+</body>
+</html>
+```
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
