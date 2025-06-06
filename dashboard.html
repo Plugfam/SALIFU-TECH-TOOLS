@@ -1,6 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Karim Salifu Site</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: white;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark {
+    background-color: #121212;
+    color: #eee;
+  }
+  /* Menu button */
+  #menuBtn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    z-index: 1001;
+  }
+  #menuBtn div {
+    width: 4px;
+    height: 4px;
+    background-color: black;
+    margin: 5px 0;
+    border-radius: 2px;
+    transition: background-color 0.3s;
+  }
+  body.dark #menuBtn div {
+    background-color: white;
+  }
+  /* Sidebar menu */
+  #sidebar {
+position: fixed;
+    top: 60px;
+    right: 20px;
+    background: #f1f1f1;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #aaa;
+    display: none;
+    flex-direction: column;
+    min-width: 160px;
+    z-index: 1000;
+  }
+  body.dark #sidebar {
+    background: #222;
+    box-shadow: 0 0 10px #000;
+  }
+  #sidebar button {
+    background: none;
+    border: none;
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+    color: black;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  #sidebar button:last-child {
+    border-bottom: none;
+  }
+  #sidebar button:hover {
+    background-color: #ddd;
+  }
+  body.dark #sidebar button {
+    color: #eee;
+    border-color: #444;
+  }
+  body.dark #sidebar button:hover {
+    background-color: #555;
+  }
+  /* Content sections */
+  .content-section {
+    display: none;
+    max-width: 600px;
+    margin: 80px auto 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fafafa;
+    box-shadow: 0 0 10px #ccc;
+  }
+  body.dark .content-section {
+    background: #333;
+    border-color: #555;
+    box-shadow: 0 0 10px #222;
+  }
+  .content-section.active {
+    display: block;
+  }
+  /* Back button */
+  .back-btn {
+    display: inline-block;
+margin-bottom: 15px;
+    background: #007bff;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .back-btn:hover {
+    background: #0056b3;
+  }
+  /* Settings text red */
+  #settings-content, #settings-content * {
+    color: red !important;
+  }
+  /* Settings controls */
+  label {
+    display: block;
+    margin: 10px 0 4px;
+  }
+  select {
+    padding: 5px;
+    font-size: 16px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Menu button -->
+<div id="menuBtn" title="Menu" aria-label="Menu button" role="button" tabindex="0">
+  <div></div><div></div><div></div>
+</div>
+
+<!-- Sidebar menu -->
+<div id="sidebar" role="menu" aria-hidden="true">
+  <button data-section="about">ABOUT</button>
+  <button data-section="contact">CONTACT</button>
+  <button data-section="service">SERVICE</button>
+  <button data-section="settings">SETTINGS</button>
+</div>
+
+<!-- Content Sections -->
+<div id="about" class="content-section" role="region" aria-labelledby="about-heading">
+  <button class="back-btn" aria-label="Back to menu">← Back</button>
+  <h2 id="about-heading">About</h2>
+  <p>I'm Karim Salifu from Nalerigu, North East Region. A web developer, a graphic designer, and all kinds of scam proofs etc.</p>
+</div>
+<div id="contact" class="content-section" role="region" aria-labelledby="contact-heading">
+  <button class="back-btn" aria-label="Back to menu">← Back</button>
+  <h2 id="contact-heading">Contact</h2>
+  <p>Phone: 0559278841</p>
+  <p>Email: karimsalifu2740@gmail.com</p>
+</div>
+
+<div id="service" class="content-section" role="region" aria-labelledby="service-heading">
+  <button class="back-btn" aria-label="Back to menu">← Back</button>
+  <h2 id="service-heading">Service</h2>
+  <p>Graphic design, iPrint, artist, hacker etc.</p>
+</div>
+
+<div id="settings" class="content-section" role="region" aria-labelledby="settings-heading">
+  <button class="back-btn" aria-label="Back to menu">← Back</button>
+  <h2 id="settings-heading">Settings</h2>
+  <label for="font-select">Choose Font:</label>
+  <select id="font-select" aria-describedby="font-desc">
+    <option value="Arial, sans-serif">Arial</option>
+    <option value="'Courier New', Courier, monospace">Courier New</option>
+    <option value="'Times New Roman', Times, serif">Times New Roman</option>
+    <option value="'Comic Sans MS', cursive, sans-serif">Comic Sans MS</option>
+  </select>
+  <small id="font-desc" style="color:red;">Select your preferred font</small>
+
+  <label for="theme-select" style="margin-top:15px;">Choose Theme:</label>
+<select id="theme-select" aria-describedby="theme-desc">
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+  </select>
+  <small id="theme-desc" style="color:red;">Toggle between light and dark mode</small>
+</div>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const sidebar = document.getElementById('sidebar');
+  const sections = document.querySelectorAll('.content-section');
+  const backButtons = document.querySelectorAll('.back-btn');
+
+  // Toggle menu visibility
+  menuBtn.addEventListener('click', () => {
+    if (sidebar.style.display === 'flex') {
+      sidebar.style.display = 'none';
+    } else {
+      sidebar.style.display = 'flex';
+      sidebar.setAttribute('aria-hidden', 'false');
+    }
+  });
+
+  // Open section and hide menu
+  sidebar.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-section');
+      sections.forEach(sec => {
+        sec.classList.remove('active');
+      });
+      document.getElementById(target).classList.add('active');
+      sidebar.style.display = 'none';
+      sidebar.setAttribute('aria-hidden', 'true');
+    });
+  });
+
+  // Back button shows menu and hides sections
+  backButtons.forEach(btn => {
+btn.addEventListener('click', () => {
+      sections.forEach(sec => sec.classList.remove('active'));
+      sidebar.style.display = 'flex';
+      sidebar.setAttribute('aria-hidden', 'false');
+    });
+  });
+
+  // Settings functionality: font change
+  const fontSelect = document.getElementById('font-select');
+  fontSelect.addEventListener('change', () => {
+    document.body.style.fontFamily = fontSelect.value;
+  });
+
+  // Settings functionality: theme change
+  const themeSelect = document.getElementById('theme-select');
+  themeSelect.addEventListener('change', () => {
+    if (themeSelect.value === 'dark') {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  });
+
+  // Accessibility: close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+      sidebar.style.display = 'none';
+      sidebar.setAttribute('aria-hidden', 'true');
+    }
+  });
+</script>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Professor Salifu</title>
