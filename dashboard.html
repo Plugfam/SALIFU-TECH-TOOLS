@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+8 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -179,3 +179,57 @@ html {
 
 </body>
 </html>
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Options Menu</title>
+  <style>
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f1f1f1;
+      min-width: 120px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 8px 12px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown:hover button {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+<body>
+
+<div class="dropdown">
+  <button>Options</button>
+  <div class="dropdown-content">
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+    <a href="#">Service</a>
+  </div>
+</div>
+
+</body>
+</html>
+```
