@@ -68,6 +68,65 @@
     <script src="script.js"></script>
 </body>
 </html>
+// Menu button click event
+document.querySelector('.menu-btn').addEventListener('click', () => {
+    document.querySelector('.menu').style.display = document.querySelector('.menu').style.display === 'block' ? 'none' : 'block';
+});
+
+// About button click event
+document.querySelector('#about-btn').addEventListener('click', () => {
+    document.querySelector('#about-content').classList.remove('hidden');
+    document.querySelector('.menu').style.display = 'none';
+});
+
+// Contact button click event
+document.querySelector('#contact-btn').addEventListener('click',.menu-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.menu li:last-child {
+    border-bottom: none;
+}
+
+.content {
+    margin-top: 50px;
+}
+
+.hidden {
+    display: none;
+}
 
 <!DOCTYPE html>
 <html lang="en">
