@@ -1,3 +1,130 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Search</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f0f0f0; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: flex; gap: 20px; }
+        .sidebar { display: flex; flex-direction: column; gap: 10px; width: 100px; }
+        .sidebar button { padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .sidebar button:hover { background-color: #0056b3; }
+        .sidebar button.active { background-color: #28a745; }
+        .content { flex: 1; }
+        .search-bar { display: flex; gap: 10px; margin-bottom: 20px; }
+        input { padding: 10px; flex: 1; border: 1px solid #ccc; border-radius: 4px; }
+        .results { display: grid; gap: 10px; }
+        .result-item { padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <button id="mp4Btn" onclick="selectType('MP4')" class="active">MP4 (Video)</button>
+            <button id="mp3Btn" onclick="selectType('MP3')">MP3 (Audio)</button>
+            <button onclick="searchMedia()">Search</button>
+        </div>
+        <div class="content">
+            <h2>Search Videos and Music</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search for videos or music...">
+            </div>
+            <div id="results" class="results"></div>
+        </div>
+    </div>
+    <script>
+        const mediaItems = [
+            { title: "Sample Video 1", type: "MP4", url: "https://example.com/video1.mp4" },
+            { title: "Sample Music 1", type: "MP3", url: "https://example.com/music1.mp3" },
+            { title: "Sample Video 2", type: "MP4", url: "https://example.com/video2.mp4" },
+            { title: "Sample Music 2", type: "MP3", url: "https://example.com/music2.mp3" }
+        ];
+
+        let selectedType = 'MP4'; // Default to MP4
+
+        function selectType(type) {
+            selectedType = type;
+            document.getElementById('mp4Btn').classList.toggle('active', type === 'MP4');
+            document.getElementById('mp3Btn').classList.toggle('active', type === 'MP3');
+            document.getElementById('searchInput').placeholder = `Search for ${type === 'MP4' ? 'videos' : 'music'}...`;
+            searchMedia(); // Auto-update results when type changes
+        }
+
+        function searchMedia() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            const filteredItems = mediaItems.filter(item => 
+                item.type === selectedType && 
+                item.title.toLowerCase().includes(query)
+            );
+
+            if (filteredItems.length === 0) {
+                resultsDiv.innerHTML = '<p>No results found.</p>';
+                return;
+            }
+
+            filteredItems.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'result-item';
+                itemDiv.innerHTML = `<strong>${item.title}</strong> (${item.type}) <a href="${item.url}" target="_blank">View</a>`;
+                resultsDiv.appendChild(itemDiv);
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchMedia();
+            }
+        });
+
+        // Initial load with MP4 selected
+        searchMedia();
+    </script>
+</body>
+</html>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
